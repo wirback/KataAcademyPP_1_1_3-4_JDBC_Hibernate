@@ -17,8 +17,12 @@ public final class Util {
     // * блок `static` сработает один раз при первом запросе к классу `Util`
     // * и проинициализирует `PROPERTIES` данными из файла `application.properties`
     static {
-        try (InputStream inputStream = Util.class.getClassLoader().getResourceAsStream("application.properties")) {
+        try (InputStream inputStream = Util.class
+                .getClassLoader()
+                .getResourceAsStream("application.properties"))
+        {
             PROPERTIES.load(inputStream);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
