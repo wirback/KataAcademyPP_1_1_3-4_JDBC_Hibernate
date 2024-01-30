@@ -62,3 +62,4 @@ public class User {
         return String.format("User{id: %d, name: %s, lastName: %s, age: %d}",
                 getId(), getName(), getLastName(), getAge());
     }
+}
