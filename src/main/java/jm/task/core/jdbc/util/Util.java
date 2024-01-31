@@ -17,7 +17,6 @@ import java.util.Properties;
 public final class Util {
     // реализуйте настройку соединения с БД
     private static final Properties PROPERTIES = new Properties();
-    private static SessionFactory sessionFactory = null;
 
     // * блок `static` сработает один раз при первом запросе к классу `Util`
     // * и проинициализирует `PROPERTIES` данными из файла `application.properties`
@@ -49,22 +48,9 @@ public final class Util {
     }
 
     public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
-            try {
-                Configuration configuration = new Configuration();
-
-                configuration.setProperties(PROPERTIES);
-                configuration.addAnnotatedClass(User.class);
-
-                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                        .applySettings(configuration.getProperties()).build();
-
-                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-            } catch (HibernateException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        return sessionFactory;
+        return new Configuration()
+                .addProperties(PROPERTIES)
+                .addAnnotatedClass(User.class)
+                .buildSessionFactory();
     }
 }
