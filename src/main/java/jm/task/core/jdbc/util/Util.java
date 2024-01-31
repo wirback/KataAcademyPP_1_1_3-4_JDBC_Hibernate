@@ -17,7 +17,7 @@ import java.util.Properties;
 public final class Util {
     // реализуйте настройку соединения с БД
     private static final Properties PROPERTIES = new Properties();
-    private static SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory = null;
 
     // * блок `static` сработает один раз при первом запросе к классу `Util`
     // * и проинициализирует `PROPERTIES` данными из файла `application.properties`
@@ -64,7 +64,7 @@ public final class Util {
                 throw new RuntimeException(e);
             }
         }
-        
+
         return sessionFactory;
     }
 }
