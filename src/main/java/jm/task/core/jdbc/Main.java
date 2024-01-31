@@ -10,7 +10,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
-        
+
         List<User> userList = new ArrayList<>();
         userList.add(new User("Ivan", "Ivanov", (byte) 30));
         userList.add(new User("Petr", "Petrov", (byte) 23));
