@@ -46,7 +46,7 @@ public final class Util {
 
     public static SessionFactory getSessionFactory() {
         return new Configuration()
-                .addProperties(PROPERTIES)
+//                .addProperties(PROPERTIES)
                 .addAnnotatedClass(User.class)
                 .buildSessionFactory();
     }
