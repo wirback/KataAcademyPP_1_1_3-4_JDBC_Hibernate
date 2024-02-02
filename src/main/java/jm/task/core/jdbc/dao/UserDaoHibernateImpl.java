@@ -22,7 +22,14 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction tx = null;
         try (Session session = sessionFactory.getCurrentSession()) {
             tx = session.beginTransaction();
-            session.createSQLQuery("CREATE TABLE IF NOT EXISTS users_table(id BIGINT)").executeUpdate();
+            session.createSQLQuery(
+                    """
+                            CREATE TABLE IF NOT EXISTS users_table(
+                            id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                            name VARCHAR(30),
+                            last_name VARCHAR(30),
+                            age TINYINT)
+                            """).executeUpdate();
             tx.commit();
         } catch (Exception e) {
             if (tx != null) {
