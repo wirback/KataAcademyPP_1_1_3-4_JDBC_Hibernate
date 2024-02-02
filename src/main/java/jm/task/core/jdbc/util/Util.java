@@ -23,9 +23,8 @@ public final class Util {
                 .getResourceAsStream("application.properties"))
         {
             PROPERTIES.load(inputStream);
-
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -40,13 +39,14 @@ public final class Util {
                     PROPERTIES.getProperty("db.password")
             );
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+
+        return null;
     }
 
     public static SessionFactory getSessionFactory() {
         return new Configuration()
-//                .addProperties(PROPERTIES)
                 .addAnnotatedClass(User.class)
                 .buildSessionFactory();
     }

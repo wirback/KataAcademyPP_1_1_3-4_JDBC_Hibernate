@@ -20,8 +20,10 @@ public class UserDaoJDBCImpl implements UserDao {
 
 
     private void processingSQL(String sql) {
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.executeUpdate();
+        try (PreparedStatement ps = connection != null ? connection.prepareStatement(sql) : null) {
+            if (ps != null) {
+                ps.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,13 +58,13 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         List<User> list = null;
 
-        try (PreparedStatement ps = connection.prepareStatement(
-                "SELECT * FROM users_table");
-             ResultSet resultSet = ps.executeQuery())
+        try (PreparedStatement ps = connection != null ? connection.prepareStatement(
+                "SELECT * FROM users_table") : null;
+             ResultSet resultSet = ps != null ? ps.executeQuery() : null)
         {
             list = new ArrayList<>();
 
-            while (resultSet.next()) {
+            while (resultSet != null && resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getLong("id"));
                 user.setName(resultSet.getString("name"));
