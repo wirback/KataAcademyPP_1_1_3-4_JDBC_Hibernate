@@ -11,28 +11,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-//    private final Connection connection = Util.getConnection();
     private static final Connection connection = Util.getConnection();
+
 
     public UserDaoJDBCImpl() {
 
     }
 
+
     private void processingSQL(String sql) {
-
-        try (PreparedStatement ps = connection.prepareStatement(sql))
-        {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.executeUpdate();
-
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     public void createUsersTable() {
         processingSQL("""
                 CREATE TABLE IF NOT EXISTS users_table(
-                id INT PRIMARY KEY AUTO_INCREMENT,
+                id BIGINT PRIMARY KEY AUTO_INCREMENT,
                 name VARCHAR(30),
                 last_name VARCHAR(30),
                 age TINYINT
@@ -56,12 +54,12 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public List<User> getAllUsers() {
-        List<User> list;
+        List<User> list = null;
 
         try (PreparedStatement ps = connection.prepareStatement(
                 "SELECT * FROM users_table");
-             ResultSet resultSet = ps.executeQuery()
-        ) {
+             ResultSet resultSet = ps.executeQuery())
+        {
             list = new ArrayList<>();
 
             while (resultSet.next()) {
@@ -75,7 +73,7 @@ public class UserDaoJDBCImpl implements UserDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         return list;
